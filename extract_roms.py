@@ -247,7 +247,7 @@ def process_dynamic_bank(bytes, args):
     newbytes[8] = bytes[args.mirror_byte]
 
   # work around bad data
-  if (args.device == "qss" and newbytes[4] == 0 and newbytes[0] < 4 and newbytes[0] > 1):
+  if (args.device in ["qss","lets_play"] and newbytes[4] == 0 and newbytes[0] < 4 and newbytes[0] > 1):
     newbytes[4] = newbytes[6] - 0x0E
     newbytes[5] = newbytes[7] - 0x0E
 
@@ -469,6 +469,30 @@ def export():
     args.titles_fn = process_indexed_titles
     args.process_fn = process_dynamic_bank
 
+  elif args.device == "lets_play":
+    set_args(args, {
+      "titles": 0x7C506,
+      "banks": 0x7CE62,
+      "separator": 255,
+      "end": 0,
+      "size": 9,
+      # expected by setup_emu
+      "code_addr": 0x7E46F,
+      "code_len": 1500,
+      "mem_addr": 0xE46F,
+      # expected by process_dynamic_bank
+      "bank_data_addr": 0x0600,
+      "start_addr": 0xE8AA,
+      "stop_addr": 0x232,
+      # expected by process_indexed_titles
+      "indices_addr": 0x7C13A,
+      "titles_offset": 0x70000,
+      "count": 200
+    })
+    args.setup_fn = setup_emu
+    args.titles_fn = process_indexed_titles
+    args.process_fn = process_dynamic_bank
+
   elif args.device == "oplayer":
     set_args(args, {
       "titles": 0x6CB2F,
@@ -592,7 +616,7 @@ def parse_args():
     parser.add_argument('-z', '--size', help='Size of each bank data entry, e.g. 9.', type=int)
     parser.add_argument('-s', '--separator', help='Character used to separate titles, e.g. 255.')
     parser.add_argument('-e', '--end', help='Character used to end titles, e.g. 0.', type=int)
-    parser.add_argument('-d', '--device', help='Device name (automatically sets values for the required arguments).', choices=["arcade_zone", "gamer_v", "hkb_502", "jl3000", "mini_arcade", "oplayer", "qss", "retro_game_box", "retrogame"])
+    parser.add_argument('-d', '--device', help='Device name (automatically sets values for the required arguments).', choices=["arcade_zone", "gamer_v", "hkb_502", "jl3000", "mini_arcade", "oplayer", "qss", "retro_game_box", "retrogame","lets_play"])
     parser.add_argument('-c', '--count', help='Max number of roms to parse, e.g. 10.', type=int)
     parser.add_argument('-o', '--outdir', help='Output directory.')
     parser.add_argument('-g', '--debug', help='Enable debug output.', action='store_true')

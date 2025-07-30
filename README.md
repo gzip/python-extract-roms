@@ -15,6 +15,7 @@ The following devices are currently supported:
 | Oplayer MGS2401A | <img src="images/oplayer.jpg" alt="Photo of Oplayer MGS2401A Handheld Console" width="200"> | ([on nesdev](https://forums.nesdev.org/viewtopic.php?p=257743#p257743)) |
 | Thumbs Up Orb Retro Arcade | <img src="images/thumbs_up_orb_mini_arcade.jpg" alt="Photo of Thumbs Up Orb Retro Arcade Handheld Console" width="200"> | ([on nesdev](https://forums.nesdev.org/viewtopic.php?p=284160#p284160)) |
 | QSS Retro Arcade | <img src="images/qss_retro_arcade.jpg" alt="Photo of QSS Retro Arcade Handheld Console" width="200"> | ([on nesdev](https://forums.nesdev.org/viewtopic.php?p=300556#p300556)) |
+| Lets Play Retro Arcade | <img src="images/letsplay_retro_arcade.jpg" alt="Photo of Lets Play Retro Arcade Handheld Console" width="200"> | ([on nesdev](https://forums.nesdev.org/viewtopic.php?p=303309#p303309)) |
 
 ## Running the Script
 Examples of typical execution:
@@ -28,6 +29,7 @@ python extract_roms.py -f "oplayer.bin" -d oplayer -o dump\oplayer -g
 python extract_roms.py -f "retro_game_box.bin" -d retro_game_box -o dump\retro_game_box -g
 python extract_roms.py -f "retrogame.bin" -d retrogame -o dump\retrogame -g
 python extract_roms.py -f "qss.bin" -d qss -o dump\qss -g
+python extract_roms.py -f "letsplay_arcade.bin" -d lets_play -o dump\lets_play -g
 ```
 
 ## Replacing ROMs
