@@ -445,7 +445,7 @@ def export():
     args.setup_fn = setup_emu
     args.process_fn = process_dynamic_bank
 
-  elif args.device == "qss":
+  elif args.device in ["qss", "lets_play"] :
     set_args(args, {
       "titles": 0x7C506,
       "banks": 0x7CE62,
@@ -463,31 +463,7 @@ def export():
       # expected by process_indexed_titles
       "indices_addr": 0x7C13A,
       "titles_offset": 0x70000,
-      "count": 240
-    })
-    args.setup_fn = setup_emu
-    args.titles_fn = process_indexed_titles
-    args.process_fn = process_dynamic_bank
-
-  elif args.device == "lets_play":
-    set_args(args, {
-      "titles": 0x7C506,
-      "banks": 0x7CE62,
-      "separator": 255,
-      "end": 0,
-      "size": 9,
-      # expected by setup_emu
-      "code_addr": 0x7E46F,
-      "code_len": 1500,
-      "mem_addr": 0xE46F,
-      # expected by process_dynamic_bank
-      "bank_data_addr": 0x0600,
-      "start_addr": 0xE8AA,
-      "stop_addr": 0x232,
-      # expected by process_indexed_titles
-      "indices_addr": 0x7C13A,
-      "titles_offset": 0x70000,
-      "count": 200
+      "count": 240 if args.device == "qss" else 200
     })
     args.setup_fn = setup_emu
     args.titles_fn = process_indexed_titles
