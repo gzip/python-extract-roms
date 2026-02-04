@@ -97,7 +97,8 @@ def write_rom(file_handle, title, bank, args):
     args.rom_fn(rom, args)
 
   file_path = os.path.join(args.outdir, title) + ".nes"
-  print ("extracting " + file_path + (" (mapper " + str(rom["mapper"]) + ") from data:" if DEBUG else ""))
+  mirror = "H" if bank["mirror"] == 1 else "V"
+  print ("extracting " + file_path + (" (mapper " + str(rom["mapper"]) + ", " + mirror + ") from data:" if DEBUG else ""))
   with open(file_path, "wb") as rom_handle:
     write_header (rom_handle, bank, rom["mapper"])
     rom_handle.write(rom["prg"])
@@ -220,7 +221,9 @@ def process_dynamic_bank(bytes, args):
   args.cpu.r.pc = args.mem_addr if "start_addr" not in args else args.start_addr
 
   # set up expected memory values
-  for i, byte in enumerate(bytes):
+  # the number of bytes written to memory might be less than the record length
+  length = len(bytes) if "mem_byte_count" not in args else args.mem_byte_count
+  for i, byte in enumerate(bytes[:length]):
     args.mem.write(args.bank_data_addr + i, byte)
 
   # execute the code, stopping at the magic number found by debugging,
@@ -520,6 +523,32 @@ def export():
     args.process_fn = process_dynamic_bank
     args.rom_fn = process_gamer_v_rom
 
+  elif args.device == "flying_tiger":
+    set_args(args, {
+      "titles": 0x6844E,
+      "banks": 0x6C0CC,
+      "separator": 255,
+      "end": 0,
+      "size": 0x0C,
+      # expected by setup_emu
+      "code_addr": 0x7E1AA,
+      "code_len": 0xD2,
+      "mem_addr": 0x0208,
+      # expected by process_dynamic_bank
+      "bank_data_addr": 0x0200,
+      "stop_addr": 0x2D1,
+      "mirror_byte": 0x0B,
+      "mem_byte_count": 0x08,
+      # expected by process_indexed_titles
+      "indices_addr": 0x682AE,
+      "titles_offset": 0x60000,
+      "count": 100,
+      "data_count": 102
+    })
+    args.setup_fn = setup_emu
+    args.titles_fn = process_indexed_titles
+    args.process_fn = process_dynamic_bank
+
   if args.filename == None:
     error += f'\nError: Filename is required!'
   elif not os.path.isfile(args.filename):
@@ -592,7 +621,7 @@ def parse_args():
     parser.add_argument('-z', '--size', help='Size of each bank data entry, e.g. 9.', type=int)
     parser.add_argument('-s', '--separator', help='Character used to separate titles, e.g. 255.')
     parser.add_argument('-e', '--end', help='Character used to end titles, e.g. 0.', type=int)
-    parser.add_argument('-d', '--device', help='Device name (automatically sets values for the required arguments).', choices=["arcade_zone", "gamer_v", "hkb_502", "jl3000", "mini_arcade", "oplayer", "qss", "retro_game_box", "retrogame","lets_play"])
+    parser.add_argument('-d', '--device', help='Device name (automatically sets values for the required arguments).', choices=["arcade_zone", "flying_tiger", "gamer_v", "hkb_502", "jl3000", "lets_play", "mini_arcade", "oplayer", "qss", "retro_game_box", "retrogame"])
     parser.add_argument('-c', '--count', help='Max number of roms to parse, e.g. 10.', type=int)
     parser.add_argument('-o', '--outdir', help='Output directory.')
     parser.add_argument('-g', '--debug', help='Enable debug output.', action='store_true')

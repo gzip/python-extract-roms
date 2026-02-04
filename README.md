@@ -7,7 +7,8 @@ The following devices are currently supported:
 | Name | Photo | Link |
 | --- | --- | --- |
 | Arcade Zone | <img src="images/arcade_zone.jpg" alt="Photo of Arcade Zone by Legami Milano" width="200"> | ([on nesdev](https://forums.nesdev.org/viewtopic.php?p=301774#p301774)) |
-| My Arcade Gamer V | <img src="images/gamer_v.jpg" alt="Photo of My Arcade Gamer V" width="200"> | ([MAME dgun2573](https://www.google.com/search?q=mame+dgun2573)) |
+| Flying Tiger Slot Machine | <img src="images/flying_tiger.jpg" alt="Photo of Flying Tiger Slot Machine" width="200"> | ([on nesdev](https://forums.nesdev.org/viewtopic.php?p=306690#p306690)) |
+| Gamer V | <img src="images/gamer_v.jpg" alt="Photo of My Arcade Gamer V" width="200"> | ([MAME dgun2573](https://www.google.com/search?q=mame+dgun2573)) |
 | Gaminja GC31 / Gameruns Retrogame | <img src="images/gaminja_gc31.jpg" alt="Gaminja GC31 Handheld Console" width="200"> | ([on nesdev](https://forums.nesdev.org/viewtopic.php?p=298744#p298744)) |
 | Gaminja GC36 / Gameruns Retro Game Box | <img src="images/gaminja_gc36.jpg" alt="Photo of GC36 Handheld Console" width="200"> | ([on nesdev](https://forums.nesdev.org/viewtopic.php?p=298602#p298602)) |
 | HKB-502 | <img src="images/hkb-502.jpg" alt="Photo of HKB-502 Handheld Console" width="200"> | ([on nesdev](https://forums.nesdev.org/viewtopic.php?p=252679#p252679)) |
